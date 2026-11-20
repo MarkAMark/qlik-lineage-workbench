@@ -8,6 +8,8 @@
 
 Windows 便携版：从 GitHub Releases 下载公开版 Windows x64 ZIP（发布后可用），完整解压后双击 `Start-Trace.cmd`，保持命令窗口打开。默认端口为 8775，占用时依次尝试后续 30 个端口，以启动窗口显示的地址为准。便携版已包含运行时，无需安装 Python 或 Node.js。
 
+启动前会展示 [Windows 运行时条款](docs/WINDOWS-RUNTIME-TERMS.md)，阅读并输入 `YES` 后启动。自动化使用者在阅读同意后可添加 `-AcceptRuntimeTerms` 参数。应用代码采用 MIT 许可证，第三方组件保留各自许可；便携包包含 Microsoft 专有可再分发代码，不能把整个包视为全部开源。详见[第三方许可清单](docs/licenses/README.md)。如希望自行提供 Python，可使用源码版。
+
 初次打开时显示导入引导：点击「选择元数据目录」→ 输入本机导出根目录的完整路径 →「扫描并导入」→ 在左侧选择 Stream、App，再选择 Sheet 和字段。
 
 从源码构建需要 Python 3.10+，以及 Node.js 20.x 中的 20.19+ 或 22.12+（推荐 24 LTS，不支持 Node 21）。便携版不需要安装 Node：

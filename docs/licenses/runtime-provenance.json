@@ -1,0 +1,11 @@
+{
+  "pythonVersion": "3.15.0",
+  "pythonLicenseSha256": "935cf13e19f8c31b497d20b05d73623431a226b230c3599bc30fa3348979bc68",
+  "documentationSha256": "91a7ac45425713e426163b51ac826cea0d774eb3d985b8ceec97ad51ccc5a145",
+  "documentationSource": "https://docs.python.org/3.15/license.html",
+  "excludedComponents": [
+    "Tcl/Tk GUI extensions and libraries",
+    "profiling/sampling vendor libraries and logo images"
+  ],
+  "reviewDate": "2026-11-20"
+}

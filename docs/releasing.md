@@ -24,10 +24,10 @@ Dependency auditing requires access to the npm security endpoint. If that servic
 ```sh
 # Source archive on any platform
 python tools/package_public.py --source-only
-# Source + self-contained runtime; Windows x64 CPython 3.12+
+# Source + self-contained runtime; the reviewed Windows x64 CPython 3.15.0
 python tools/package_public.py
 # Exercise the real ZIP using only its bundled runtime
-python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.1.zip
+python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.2.zip
 ```
 
 The packager has no metadata-root option. It fails when repository metadata contains any payload, copies only allowed source files, and creates a portable archive with an empty `metadata/apps` placeholder. Source ZIPs omit dependencies, compiled assets, generated outputs and Git history. Portable ZIPs include built frontend, backend, isolated CPython, SQLGlot and license texts. Their manifest includes per-file SHA256 hashes and explicitly records zero metadata files. Each ZIP has a SHA256 sidecar.
@@ -47,7 +47,15 @@ Check empty onboarding on a machine without Python/Node, and import a temporary 
 2. Create an empty repository. Make the first commit from this public source tree, using your own Git identity. Do not attach any internal repository history.
 3. Before pushing, inspect `git diff --cached --stat` and `git diff --cached`, run the public-content guard, and ensure the tracked metadata directory contains only `.gitkeep`.
 4. Push source, let CI finish and review its artifacts. CI builds candidates but does not publish releases.
-5. Create tag `v0.1.1`, create a GitHub Release, and attach only the **Public Windows x64**, **Source** ZIPs and matching SHA256 files produced by this workflow. The dependency-hardened 0.1.1 supersedes the initial 0.1.0 candidate.
+5. Create tag `v0.1.2`, create a GitHub Release, and attach only the **Public Windows x64**, **Source** ZIPs and matching SHA256 files produced by this workflow. Version 0.1.2 includes the reviewed third-party notices and a reduced runtime; it supersedes the earlier candidates.
+
+## Runtime and license review
+
+Windows portable packaging uses the reviewed CPython **3.15.0** Windows x64 runtime. Its version and original binary-license hash must match `docs/licenses/runtime-provenance.json`; source development can use the Python versions documented in the main README. A different portable runtime requires a fresh component-license review and refreshed provenance. Never bypass that check.
+
+Keep `docs/licenses/`, `THIRD_PARTY_NOTICES.md`, `LICENSE`, and the Windows runtime terms in both distributions. The packager also collects installed build-tool notices because emitted helpers can appear in the final JavaScript. It fails on missing dependency license identifiers or texts. Platform-optional packages absent from the build machine remain documented in the locked inventory without implying their binaries were shipped. Tcl/Tk, profiling vendor libraries and profiler logos are excluded. Review actual archive contents, not only package.json declarations.
+
+The portable launcher requires explicit Windows runtime terms acceptance, including downstream redistributor conditions. Tests use `-AcceptRuntimeTerms` after reviewing those terms. Verify rejection exits before starting Python, and verify normal startup and imports after acceptance. This acceptance does not change the application's MIT license or relicense third-party binaries.
 6. Enable private vulnerability reporting and secret scanning when available. Describe the Chinese UI, supported export format and static-analysis limitations in the repository About/README.
 
 Do not upload an internal sharing package even if its filename looks similar. GitHub Pages cannot host the Python backend; users run this application locally.

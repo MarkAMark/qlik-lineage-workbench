@@ -38,11 +38,31 @@ def main():
                 assert (extracted / name).resolve().is_relative_to(extracted.resolve())
             source.extractall(extracted)
         bundle = next(extracted.iterdir())
+        shipped = {p.relative_to(bundle).as_posix() for p in bundle.rglob('*') if p.is_file()}
+        forbidden = {'pythonw.exe', '_tkinter.pyd', 'tcl90.dll', 'tcl9tk90.dll', 'libtommath.dll'}
+        assert not any(Path(name).name in forbidden or '/profiling/' in name for name in shipped)
+        notices = '\n'.join(p.read_text(encoding='utf-8-sig') for p in (bundle / 'docs/licenses').rglob('*') if p.is_file())
+        for marker in ('VoidZero', 'Evan Wallace', 'Daan Leijen', 'Stefan Krah',
+                       'UNICODE LICENSE V3', 'Thai Open Source Software Center', 'Microsoft Distributable Code'):
+            assert marker in notices, 'Missing attribution: ' + marker
+        dependencies = json.loads((bundle / 'licenses/frontend-dependencies.json').read_text(encoding='utf-8'))
+        assert all(record['license'] and record['files'] for record in dependencies)
+        assert {'vite', 'rolldown'} <= {record['name'] for record in dependencies}
+        for record in dependencies:
+            assert all((bundle / path).is_file() for path in record['files'])
+        checks.append('Component notices and build-helper attributions present; unused GUI/profiler assets absent')
         windows = Path(os.environ['SystemRoot'])
         powershell = windows / 'System32/WindowsPowerShell/v1.0/powershell.exe'
         environment = {**os.environ, 'PATH': os.pathsep.join(map(str, [windows, windows / 'System32', powershell.parent])),
                        'PYTHONHOME': str(temporary / 'absent-python'), 'PYTHONPATH': str(temporary / 'absent-packages')}
         runtime = bundle / 'runtime/python.exe'
+        rejected = subprocess.run([str(powershell), '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+                                  '-File', str(bundle / 'Start-Trace.ps1'), '-NoBrowser'],
+                                 cwd=temporary, env=environment, input=b'NO\n', capture_output=True, timeout=20,
+                                 creationflags=subprocess.CREATE_NO_WINDOW)
+        assert rejected.returncode != 0 and b'Local URL:' not in rejected.stdout
+        assert b'not accepted' in rejected.stderr or b'NonInteractive' in rejected.stderr
+        checks.append('Launcher refuses to start without runtime-terms acceptance')
 
         def python(*arguments):
             result = subprocess.run([str(runtime), '-I', '-B', '-X', 'utf8', *map(str, arguments)], cwd=temporary,
@@ -63,7 +83,7 @@ def main():
         process = None
         try:
             launch = [str(powershell), '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(bundle / 'Start-Trace.ps1'),
-                      '-NoBrowser', '-Port', str(occupied)]
+                      '-NoBrowser', '-AcceptRuntimeTerms', '-Port', str(occupied)]
             log_path = temporary / 'launch.log'
             with log_path.open('wb') as log:
                 process = subprocess.Popen(launch, cwd=temporary, env=environment, stdout=log, stderr=subprocess.STDOUT,

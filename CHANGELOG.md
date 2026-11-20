@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2
+
+- Include verified third-party license inventories and original notices in source and portable archives, covering runtime components and emitted build helpers.
+- Correct missing license identifiers and retain Vite/Rolldown third-party notice files.
+- Exclude unused Python GUI binaries, profiling vendor JavaScript and logo assets; pin the reviewed portable Python runtime.
+- Present Windows runtime redistribution terms before launch; support explicit acceptance for unattended verification.
+- Keep application behavior and zero-metadata distribution unchanged.
+
 ## 0.1.1
 
 - Upgrade the frontend build chain to Vite 8 and its matching React plugin; refresh affected transitive dependencies.

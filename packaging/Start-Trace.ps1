@@ -1,7 +1,8 @@
 ﻿param(
     [string]$MetadataRoot = '',
     [ValidateRange(1024, 65535)][int]$Port = 8775,
-    [switch]$NoBrowser
+    [switch]$NoBrowser,
+    [switch]$AcceptRuntimeTerms
 )
 $ErrorActionPreference = 'Stop'
 Push-Location -LiteralPath $PSScriptRoot
@@ -12,6 +13,13 @@ try {
         if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
             throw 'Package files are missing. Extract the entire ZIP before starting Trace.'
         }
+    }
+    $termsPath = Join-Path $PSScriptRoot 'docs\WINDOWS-RUNTIME-TERMS.md'
+    if (-not (Test-Path -LiteralPath $termsPath -PathType Leaf)) { throw 'Windows runtime terms are missing.' }
+    if (-not $AcceptRuntimeTerms) {
+        Write-Host (Get-Content -LiteralPath $termsPath -Raw -Encoding UTF8)
+        $answer = Read-Host 'Accept these runtime redistribution/use terms? Type YES to start; anything else exits'
+        if ($answer -cne 'YES') { throw 'Runtime terms were not accepted; Trace has not started.' }
     }
     if (-not $MetadataRoot) { $MetadataRoot = Join-Path $PSScriptRoot 'metadata\apps' }
     if (-not [IO.Path]::IsPathRooted($MetadataRoot)) { $MetadataRoot = Join-Path $PSScriptRoot $MetadataRoot }

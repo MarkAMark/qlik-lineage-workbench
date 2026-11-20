@@ -45,7 +45,9 @@ def check(root: Path = PROJECT, *, check_git: bool = True) -> list[Path]:
         relative = path.relative_to(root).as_posix()
         if path.is_symlink() or any(p.is_symlink() or (hasattr(p, 'is_junction') and p.is_junction()) for p in path.parents if p != root.parent):
             errors.append(f'{relative}: linked source is not allowed')
-        if path.name not in ROOT_FILES and relative != 'metadata/apps/.gitkeep' and path.suffix not in SOURCE_EXT:
+        license_data = relative.startswith('docs/licenses/') and (path.suffix in {'.txt', '.json'} or
+            path.name.upper().startswith(('LICENSE', 'COPYING', 'NOTICE', 'THIRD-PARTY-LICENSE', 'THIRDPARTYNOTICE')))
+        if path.name not in ROOT_FILES and relative != 'metadata/apps/.gitkeep' and path.suffix not in SOURCE_EXT and not license_data:
             errors.append(f'{relative}: unexpected source file type')
         if path.name in EXPORT_NAMES or path.suffix.lower() in {'.qvs', '.qvf', '.qvd', '.qvx'}:
             errors.append(f'{relative}: exported metadata is forbidden')

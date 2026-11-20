@@ -16,11 +16,13 @@ A local workbench for exploring Qlik Sense metadata and assessing migration to A
 
 Download the **Public Windows x64** archive from GitHub Releases when published, extract the entire archive, then double-click `Start-Trace.cmd`. No Python or Node installation is needed for recipients. The default address is `http://127.0.0.1:8775`; if busy, the launcher tries the next 30 ports. Keep the terminal open while using the app.
 
+Before starting, the portable launcher displays the [Windows runtime terms](docs/WINDOWS-RUNTIME-TERMS.md); type `YES` to accept. For unattended use, review the terms first and pass `-AcceptRuntimeTerms`. The application is MIT-licensed; bundled third-party components keep their own licenses, including the Microsoft proprietary redistributable runtime. See the [license inventory](docs/licenses/README.md). The source edition lets you supply your own Python runtime.
+
 The initial screen is intentionally empty. Click **选择元数据目录**, paste the absolute path to your export and click **扫描并导入**. Files stay on the local machine. Selecting an external folder lasts for the current process; pass `-MetadataRoot` when launching to reuse it after restart, or place exports under the package's local `metadata/apps` folder.
 
 ## Run from source
 
-Requirements: Python 3.10+ and Node.js 20.19+ on the 20.x line, or 22.12+ (24 LTS recommended). Node 21 is unsupported. Node is needed for source builds only; the portable edition uses its bundled Python runtime. Building portable archives additionally requires Windows x64 CPython 3.12+.
+Requirements: Python 3.10+ and Node.js 20.19+ on the 20.x line, or 22.12+ (24 LTS recommended). Node 21 is unsupported. Node is needed for source builds only; the portable edition uses its bundled Python runtime. Building portable archives additionally requires the reviewed Windows x64 CPython 3.15.0.
 
 ```powershell
 .\Setup.ps1
