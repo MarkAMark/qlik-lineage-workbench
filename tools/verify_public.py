@@ -37,7 +37,9 @@ def main():
             for name in source.namelist():
                 assert (extracted / name).resolve().is_relative_to(extracted.resolve())
             source.extractall(extracted)
-        bundle = next(extracted.iterdir())
+        # Windows runners may expose TEMP through an 8.3 alias or a junction.
+        # Compare canonical paths on both sides when proving runtime isolation.
+        bundle = next(extracted.iterdir()).resolve()
         shipped = {p.relative_to(bundle).as_posix() for p in bundle.rglob('*') if p.is_file()}
         forbidden = {'pythonw.exe', '_tkinter.pyd', 'tcl90.dll', 'tcl9tk90.dll', 'libtommath.dll'}
         assert not any(Path(name).name in forbidden or '/profiling/' in name for name in shipped)
@@ -73,7 +75,8 @@ def main():
         python(bundle / 'verify_package.py')
         proof = json.loads(python('-c', 'import sys,json;sys.path.insert(0,sys.argv[1]);import backend,sqlglot,ssl;'
                                  'print(json.dumps([sys.executable,sqlglot.__file__,ssl.__file__]))', bundle))
-        assert all(Path(path).resolve().is_relative_to(bundle) for path in proof)
+        assert all(Path(path).resolve().is_relative_to(bundle) for path in proof), {
+            'bundle': str(bundle), 'runtimePaths': proof}
         checks.append('ZIP CRC, manifest hashes and isolated bundled runtime pass')
         http = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         sentinel = socket.socket()
