@@ -16,14 +16,14 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install --target .deps -r requirements.txt
       - run: npm ci
-      - run: npm audit --omit=dev --audit-level=high
+      - run: npm audit --audit-level=low
       - run: python -B -m unittest discover -s tests
       - run: npm run test:graph
       - run: npm run build
       - run: python tools/check_public.py
       - run: npm run test:browser
       - run: python tools/package_public.py
-      - run: python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.0.zip
+      - run: python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.1.zip
       - uses: actions/upload-artifact@v4
         with:
           name: public-edition-candidate

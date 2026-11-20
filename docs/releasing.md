@@ -10,7 +10,7 @@ Install the requirements and build steps in [README](../README.md), then run:
 python -B -m unittest discover -s tests
 npm run test:graph
 npm run build
-npm audit --omit=dev --audit-level=high
+npm audit --audit-level=low
 python tools/check_public.py
 npm run test:browser
 ```
@@ -27,7 +27,7 @@ python tools/package_public.py --source-only
 # Source + self-contained runtime; Windows x64 CPython 3.12+
 python tools/package_public.py
 # Exercise the real ZIP using only its bundled runtime
-python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.0.zip
+python tools/verify_public.py releases/Trace-Qlik-Lineage-Public-Windows-x64-v0.1.1.zip
 ```
 
 The packager has no metadata-root option. It fails when repository metadata contains any payload, copies only allowed source files, and creates a portable archive with an empty `metadata/apps` placeholder. Source ZIPs omit dependencies, compiled assets, generated outputs and Git history. Portable ZIPs include built frontend, backend, isolated CPython, SQLGlot and license texts. Their manifest includes per-file SHA256 hashes and explicitly records zero metadata files. Each ZIP has a SHA256 sidecar.
@@ -47,7 +47,7 @@ Check empty onboarding on a machine without Python/Node, and import a temporary 
 2. Create an empty repository. Make the first commit from this public source tree, using your own Git identity. Do not attach any internal repository history.
 3. Before pushing, inspect `git diff --cached --stat` and `git diff --cached`, run the public-content guard, and ensure the tracked metadata directory contains only `.gitkeep`.
 4. Push source, let CI finish and review its artifacts. CI builds candidates but does not publish releases.
-5. Create tag `v0.1.0`, create a GitHub Release, and attach only the **Public Windows x64**, **Source** ZIPs and matching SHA256 files produced by this workflow.
+5. Create tag `v0.1.1`, create a GitHub Release, and attach only the **Public Windows x64**, **Source** ZIPs and matching SHA256 files produced by this workflow. The dependency-hardened 0.1.1 supersedes the initial 0.1.0 candidate.
 6. Enable private vulnerability reporting and secret scanning when available. Describe the Chinese UI, supported export format and static-analysis limitations in the repository About/README.
 
 Do not upload an internal sharing package even if its filename looks similar. GitHub Pages cannot host the Python backend; users run this application locally.

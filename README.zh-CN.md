@@ -10,7 +10,7 @@ Windows 便携版：从 GitHub Releases 下载公开版 Windows x64 ZIP（发布
 
 初次打开时显示导入引导：点击「选择元数据目录」→ 输入本机导出根目录的完整路径 →「扫描并导入」→ 在左侧选择 Stream、App，再选择 Sheet 和字段。
 
-从源码运行需要 Python 3.10+、Node.js 20+（推荐 24 LTS）：
+从源码构建需要 Python 3.10+，以及 Node.js 20.x 中的 20.19+ 或 22.12+（推荐 24 LTS，不支持 Node 21）。便携版不需要安装 Node：
 
 ```powershell
 .\Setup.ps1

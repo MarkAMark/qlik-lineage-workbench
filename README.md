@@ -20,7 +20,7 @@ The initial screen is intentionally empty. Click **选择元数据目录**, past
 
 ## Run from source
 
-Requirements: Python 3.10+ and Node.js 20+ (24 LTS recommended). Building portable archives additionally requires Windows x64 CPython 3.12+.
+Requirements: Python 3.10+ and Node.js 20.19+ on the 20.x line, or 22.12+ (24 LTS recommended). Node 21 is unsupported. Node is needed for source builds only; the portable edition uses its bundled Python runtime. Building portable archives additionally requires Windows x64 CPython 3.12+.
 
 ```powershell
 .\Setup.ps1
