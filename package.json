@@ -1,0 +1,30 @@
+{
+  "name": "qlik-lineage-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "test:graph": "node --test tests/graph-relations.mjs tests/table-graph-relations.mjs",
+    "test:browser": "node --experimental-websocket tests/public-smoke.mjs",
+    "preview": "vite preview",
+    "check:public": "python tools/check_public.py",
+    "test:python": "python -B -m unittest discover -s tests"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.468.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.53",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
+  }
+}

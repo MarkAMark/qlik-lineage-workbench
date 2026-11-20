@@ -1,0 +1,24 @@
+.edge-code-dialog{position:fixed;inset:0;margin:auto;padding:0;width:min(960px,calc(100vw - 48px));max-width:calc(100vw - 48px);max-height:calc(100dvh - 48px);overflow:auto;border:1px solid #dce5df;border-radius:12px;background:#fff;color:var(--ink);box-shadow:0 20px 100px #0f2f2730}
+.edge-code-dialog::backdrop{background:#0b262966;backdrop-filter:blur(3px)}
+.edge-code-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px;border-bottom:1px solid var(--border)}
+.edge-code-heading>div{display:flex;align-items:center;gap:10px;color:var(--teal)}
+.edge-code-heading h2{font-size:18px;font-weight:600}
+.edge-code-heading>div>span{font-size:11px;color:var(--muted)}
+.edge-code-path{display:flex;align-items:center;gap:20px;padding:18px 22px;background:#f7faf9}
+.edge-code-path>div{display:flex;flex-direction:column;align-items:flex-start;gap:8px;flex:1;min-width:0}
+.edge-code-path strong{font:12px/1.6 Consolas,"Microsoft YaHei",monospace;overflow-wrap:anywhere;color:#365b76}
+.edge-code-path>svg{color:var(--teal)}
+.edge-code-hint{padding:10px 22px;font-size:11px;color:#7a8d98;line-height:1.7}
+.edge-code-endpoints{display:flex;gap:18px;padding:0 22px;border-bottom:1px solid var(--border)}
+.edge-code-endpoints>button{padding:10px 0;font-size:12px;border-bottom:2px solid transparent;color:#7a8d98}
+.edge-code-endpoints>button.active{border-color:var(--teal);color:var(--teal);font-weight:600}
+.edge-code-dialog .code-toolbar{padding:14px 22px;flex-wrap:wrap}
+.edge-code-dialog .code-origin{max-width:100%;min-width:0;flex:1}
+.edge-code-dialog .code-origin>strong{font-size:12px}
+.edge-code-dialog .code-location{padding:0 22px 12px;font-size:11px;flex-wrap:wrap}
+.edge-code-dialog .code-block{font-size:12px;max-height:min(52vh,560px);min-height:110px}
+.edge-code-dialog .node-note{padding:10px 22px;font-size:11px}
+.edge-code-copy-error{padding:8px 22px;font-size:11px;color:#b27637}
+.lineage-graph .react-flow__edge[role=button]{cursor:pointer}
+.lineage-graph .react-flow__edge[role=button]:focus-visible .react-flow__edge-path{stroke:#167f70;stroke-width:3}
+@media(max-width:720px){.edge-code-dialog{width:calc(100vw - 24px);max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}.edge-code-heading{padding:14px}.edge-code-heading h2{font-size:16px}.edge-code-path{padding:14px;gap:10px}.edge-code-path strong{font-size:10px}.edge-code-hint{padding:10px 14px;font-size:10px}.edge-code-endpoints{padding:0 14px}.edge-code-dialog .code-toolbar{padding:12px 14px;gap:10px}.edge-code-dialog .code-origin{flex-basis:100%}.edge-code-dialog .code-location{padding:0 14px 10px;font-size:10px}.edge-code-dialog .code-block{font-size:11px;max-height:45vh}}

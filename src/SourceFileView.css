@@ -1,0 +1,18 @@
+.source-file-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;background:#f4f8f6;border-top:1px solid #e3ebe6;color:#658577;font-size:10px;flex-wrap:wrap}
+.source-file-toolbar .button{font-size:10px;padding:4px 8px}
+.source-file-code{height:360px;max-height:52vh;min-height:180px;overflow:auto;position:relative;background:#fafbfd;border-top:1px solid #e3ebe6;tab-size:2;font:12px/24px Consolas,"Microsoft YaHei",monospace;color:#55718b;overscroll-behavior:contain}
+.source-file-code:focus-visible{outline:2px solid #6fae97;outline-offset:-2px}
+.source-file-lines{position:relative}
+.source-file-line{position:absolute;left:0;right:0;height:24px;display:flex;align-items:stretch;white-space:pre}
+.source-file-line code{font:inherit;white-space:pre;padding-right:24px}
+.source-line-number{position:sticky;left:0;z-index:1;flex:0 0 64px;text-align:right;padding-right:14px;margin-right:13px;border-right:1px solid #e0e7e9;background:#fafbfd;color:#9cabb4;user-select:none;font-size:11px}
+.source-current-line{background:#e8f4ed}
+.source-current-line .source-line-number{background:#dceee3;color:#35765a;box-shadow:inset 3px 0 #4e9673;font-weight:600}
+.source-current-line mark{background:#c9e6d3;color:#245f42;border-radius:2px;padding:2px 0}
+.code-copy-error{padding:8px 14px;font-size:11px;color:#b27637}
+.code-view-switch{white-space:nowrap}
+.code-definition-source{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;padding:9px 14px;background:#f4f8f6;border-top:1px solid #e3ebe6;font-size:10px;color:#658577;overflow-wrap:anywhere}
+.code-definition-source strong{font-weight:500;color:#3e7460}
+.code-definition-source label{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.code-definition-source select{max-width:100%;border:1px solid #dce8df;border-radius:4px;padding:4px 6px;background:#fff;color:#416f5c;font-size:10px}
+@media(max-width:720px){.source-file-code{font-size:11px;height:300px;max-height:45vh}.source-file-toolbar{font-size:9px}.source-line-number{flex-basis:48px;margin-right:10px;padding-right:10px}}
